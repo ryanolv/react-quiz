@@ -53,9 +53,16 @@ function reducer(state, action) {
       return {
         ...state,
         status: "finished",
-        answer: null,
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
+      };
+    case "restartQuiz":
+      return {
+        ...state,
+        status: "ready",
+        index: 0,
+        answer: null,
+        points: 0,
       };
     default:
       throw new Error("Action unkown");
@@ -103,15 +110,23 @@ export default function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              index={index}
+              numQuestions={numQuestions}
+            />
           </>
         )}
         {status === "finished" && (
-          <FinishScreen
-            points={points}
-            maxPossiblePoints={maxPossiblePoints}
-            highscore={highscore}
-          />
+          <>
+            <FinishScreen
+              points={points}
+              maxPossiblePoints={maxPossiblePoints}
+              highscore={highscore}
+              dispatch={dispatch}
+            />
+          </>
         )}
       </Main>
     </div>
