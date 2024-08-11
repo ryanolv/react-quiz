@@ -1,8 +1,6 @@
 import Options from "./Options";
 
 function Question({ question, dispatch, answer }) {
-  console.log(question);
-
   if (!question) return;
   return (
     <div>
